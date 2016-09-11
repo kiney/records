@@ -284,9 +284,10 @@ class TransactionContext():
     def __exit__(self, exc_type, exc_value, tb):
         if exc_type == None:
             self.transaction.commit()
+            return True
         else:
             self.transaction.rollback()
-
+            return False
 
 def _reduce_datetimes(row):
     """Receives a row, converts datetimes to strings."""
