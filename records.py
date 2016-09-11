@@ -206,6 +206,7 @@ class Database(object):
         # Connect to the database.
         self.db = create_engine(self.db_url).connect()
         self.open = True
+        self.rowcount = 0
 
     def close(self):
         """Closes the connection to the Database."""
@@ -239,6 +240,7 @@ class Database(object):
 
         # Execute the given query.
         cursor = self.db.execute(text(query), **params) # TODO: PARAMS GO HERE
+        self.rowcount = int(cursor.rowcount)
 
         # Row-by-row Record generator.
         row_gen = (Record(cursor.keys(), row) for row in cursor)
